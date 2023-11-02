@@ -1096,16 +1096,15 @@ std::optional<double> ObstacleCruisePlannerNode::calcTrajDistToSecurePolysDist(
     if (boost::geometry::intersects(traj_polys_with_lat_margin.at(col_i), obstacle_polygon)) {
       double last_dist = 0.0;
       for (std::int32_t sec_i = col_i - 1; sec_i >= 0; --sec_i) {
-        double current_dist =
+        double sec_i_dist =
           boost::geometry::distance(traj_polys_with_lat_margin.at(sec_i), obstacle_polygon);
-        debug(current_dist);
-        if (current_dist > dist_to_be_secured) {
-          debug(sec_i);
-          double decimal_secure_index =
-            sec_i + (dist_to_be_secured - current_dist) / (last_dist - current_dist);
+        if (sec_i_dist > dist_to_be_secured) {
+          const double decimal_secure_index =
+            sec_i + (dist_to_be_secured - sec_i_dist) / (last_dist - sec_i_dist);
+          debug(decimal_secure_index);
           return decimal_secure_index * p.decimate_trajectory_step_length;
         }
-        last_dist = current_dist;
+        last_dist = sec_i_dist;
       }
       return 0.0;
     }

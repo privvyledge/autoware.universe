@@ -25,13 +25,35 @@
 #include <boost/geometry/algorithms/distance.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
 
-
-#define debug(var)  do{std::cerr << __func__ << ": " << __LINE__ << ", " << #var << " : ";view(var);}while(0)
-template<typename T> void view(T e){std::cerr << e << std::endl;}
-template<typename T> void view(const std::vector<T>& v){for(const auto& e : v){ std::cerr << e << " "; } std::cerr << std::endl;}
-template<typename T> void view(const std::vector<std::vector<T> >& vv){ for(const auto& v : vv){ view(v); } }
-#define line() {std::cerr << "(" << __FILE__ <<  ") " << __func__ << ": " << __LINE__ << std::endl; }
-
+#define debug(var)                                                      \
+  do {                                                                  \
+    std::cerr << __func__ << ": " << __LINE__ << ", " << #var << " : "; \
+    view(var);                                                          \
+  } while (0)
+template <typename T>
+void view(T e)
+{
+  std::cerr << e << std::endl;
+}
+template <typename T>
+void view(const std::vector<T> & v)
+{
+  for (const auto & e : v) {
+    std::cerr << e << " ";
+  }
+  std::cerr << std::endl;
+}
+template <typename T>
+void view(const std::vector<std::vector<T>> & vv)
+{
+  for (const auto & v : vv) {
+    view(v);
+  }
+}
+#define line()                                                                         \
+  {                                                                                    \
+    std::cerr << "(" << __FILE__ << ") " << __func__ << ": " << __LINE__ << std::endl; \
+  }
 
 namespace
 {
@@ -292,7 +314,6 @@ std::vector<TrajectoryPoint> PlannerInterface::generateStopTrajectory(
   // const double closest_obstacle_dist = motion_utils::calcSignedArcLength(
   //   planner_data.traj_points, 0, closest_stop_obstacle->collision_point);
 
-
   const auto ego_segment_idx =
     ego_nearest_param_.findSegmentIndex(planner_data.traj_points, planner_data.ego_pose);
   const auto negative_dist_to_ego = motion_utils::calcSignedArcLength(
@@ -303,11 +324,11 @@ std::vector<TrajectoryPoint> PlannerInterface::generateStopTrajectory(
 
   const double zero_vel_dist = dist_to_closest_stop_obstacle + dist_to_ego;
 
-  // const double margin_from_obstacle =
-  //   calculateMarginFromObstacleOnCurve(planner_data, *closest_stop_obstacle);
+  const double margin_from_obstacle =
+    calculateMarginFromObstacleOnCurve(planner_data, *closest_stop_obstacle);
 
-  // // If behavior stop point is ahead of the closest_obstacle_stop point within a certain margin
-  // // we set closest_obstacle_stop_distance to closest_behavior_stop_distance
+  // If behavior stop point is ahead of the closest_obstacle_stop point within a certain margin
+  // we set closest_obstacle_stop_distance to closest_behavior_stop_distance
   // const double margin_from_obstacle_considering_behavior_module = [&]() {
   //   const size_t nearest_segment_idx =
   //     findEgoSegmentIndex(planner_data.traj_points, planner_data.ego_pose);
@@ -350,13 +371,11 @@ std::vector<TrajectoryPoint> PlannerInterface::generateStopTrajectory(
   //   // Check feasibility to stop
   //   if (suppress_sudden_obstacle_stop_) {
   //     const double closest_obstacle_stop_dist =
-  //       closest_obstacle_dist - margin_from_obstacle_considering_behavior_module -
-  //       abs_ego_offset;
+  //       closest_obstacle_dist - margin_from_obstacle_considering_behavior_module - abs_ego_offset;
 
   //     // Calculate feasible stop margin (Check the feasibility)
   //     const double feasible_stop_dist = calcMinimumDistanceToStop(
-  //                                         planner_data.ego_vel,
-  //                                         longitudinal_info_.limit_max_accel,
+  //                                         planner_data.ego_vel, longitudinal_info_.limit_max_accel,
   //                                         longitudinal_info_.limit_min_accel) +
   //                                       dist_to_ego;
 
@@ -387,8 +406,8 @@ std::vector<TrajectoryPoint> PlannerInterface::generateStopTrajectory(
   //       prev_stop_distance_info_->first, 0, planner_data.traj_points.front().pose.position,
   //       traj_front_point_prev_seg_idx);
 
-  //     const double prev_zero_vel_dist = prev_stop_distance_info_->second -
-  //     diff_dist_front_points; if (
+  //     const double prev_zero_vel_dist = prev_stop_distance_info_->second - diff_dist_front_points;
+  //     if (
   //       std::abs(prev_zero_vel_dist - current_zero_vel_dist) <
   //       longitudinal_info_.hold_stop_distance_threshold) {
   //       return prev_zero_vel_dist;
