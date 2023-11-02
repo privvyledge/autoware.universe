@@ -1106,7 +1106,7 @@ std::optional<double> ObstacleCruisePlannerNode::calcTrajDistToSecurePolysDist(
         }
         last_dist = sec_i_dist;
       }
-      return 0.0;
+      return last_dist - dist_to_be_secured;
     }
   }
   return std::nullopt;
