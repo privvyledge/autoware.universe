@@ -1,4 +1,4 @@
-ci:
+'type:ci':
   - .github/**/*
   - "*.json"
   - "*.yaml"
@@ -6,36 +6,36 @@ ci:
   - .clang-format
   - .gitignore
   - .prettierignore
-documentation:
+'type:documentation':
   - docs/**/*
   - "**/*.md"
   - "**/*.rst"
   - "**/*.jpg"
   - "**/*.png"
   - "**/*.svg"
-common:
+'type:common':
   - common/**/*
-control:
+'type:control':
   - control/**/*
-evaluator:
+'type:evaluator':
   - evaluator/**/*
-launch:
+'type:launch':
   - launch/**/*
-localization:
+'type:localization':
   - localization/**/*
-map:
+'type:map':
   - map/**/*
-perception:
+'type:perception':
   - perception/**/*
-planning:
+'type:planning':
   - planning/**/*
-sensing:
+'type:sensing':
   - sensing/**/*
-simulator:
+'type:simulator':
   - simulator/**/*
-system:
+'type:system':
   - system/**/*
-tools:
+'type:tools':
   - tools/**/*
-vehicle:
+'type:vehicle':
   - vehicle/**/*
